@@ -47,7 +47,7 @@ def loss_function(m, b, points):
 def main():
     """main function"""
     try:
-        data = pd.read_csv('d.csv')
+        data = pd.read_csv('data.csv')
         data_n = normalize_data(data)
         errors = []
         m = 0
@@ -85,6 +85,8 @@ def main():
         print(f"{AssertionError.__name__}: {error}")
     except FileNotFoundError as error:
         print(f"{FileNotFoundError.__name__}: {error}")
+    except Exception as error:
+        print(f"An unexpected error occurred: {error}")
     return
 
 
