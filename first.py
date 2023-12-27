@@ -55,6 +55,8 @@ def main():
             print("Error in thethas file")
             return
         estimation = mileage * thetas[0] + thetas[1]
+        if estimation < 0:
+            estimation = 0
         print(f"For a mileage of {mileage} the price \
 is estimated to be {estimation}")
     except AssertionError as error:
