@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from tqdm import tqdm
+from Loading import ft_tqdm
 
 
 def normalize_data(data):
@@ -54,7 +54,7 @@ def main():
         b = 0
         L = 0.001
         epochs = 10000
-        for i in tqdm(range(epochs)):
+        for i in ft_tqdm(range(epochs)):
             m, b = gradient_descent(m, b, data_n, L)
             err = loss_function(m, b, data)
             errors.append(err)
