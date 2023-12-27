@@ -61,7 +61,8 @@ def main():
 
         # de-normalize
         m, b = denormalize_elem(m, b, data)
-
+        
+        print()
         print(f"m={m}, b={b}")
         # saving thetas
         f = open("thetas.txt", "w+")
