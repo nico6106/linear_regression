@@ -32,10 +32,11 @@ def gradient_descent(m_now, b_now, points, L):
     return m, b
 
 
-def loss_function(m, b, points):
+def loss_function(m, b, points, denorm):
     """compute absolute error"""
     total_error = 0
-    m, b = denormalize_elem(m, b, points)
+    if denorm:
+        m, b = denormalize_elem(m, b, points)
     for i in range(len(points)):
         x = points.iloc[i].km
         y = points.iloc[i].price
@@ -50,18 +51,21 @@ def main():
         data = pd.read_csv('data.csv')
         data_n = normalize_data(data)
         errors = []
+        errors_norm = []
         m = 0
         b = 0
         L = 0.001
         epochs = 10000
         for i in ft_tqdm(range(epochs)):
             m, b = gradient_descent(m, b, data_n, L)
-            err = loss_function(m, b, data)
+            err = loss_function(m, b, data, True)
             errors.append(err)
+            err = loss_function(m, b, data_n, False)
+            errors_norm.append(err)
 
         # de-normalize
         m, b = denormalize_elem(m, b, data)
-        
+
         print()
         print(f"m={m}, b={b}")
         # saving thetas
@@ -78,9 +82,18 @@ def main():
         plt.show()
 
         # graph for errors
-        plt.plot(list(range(0, 10000)), errors)
-        plt.xlabel('nb of iterations')
-        plt.ylabel('cost')
+        figure, axis = plt.subplots(2, 1)
+        axis[0].plot(list(range(0, 10000)), errors)
+        axis[0].set_xlabel("nb of iterations")
+        axis[0].set_ylabel("cost")
+
+        axis[1].plot(list(range(0, 10000)), errors_norm)
+        axis[1].set_xlabel("nb of iterations normalized")
+        axis[1].set_ylabel("cost normalized")
+        # plt.plot(list(range(0, 10000)), errors)
+        # plt.plot(list(range(0, 10000)), errors_norm)
+        # plt.xlabel('nb of iterations')
+        # plt.ylabel('cost')
         plt.show()
     except AssertionError as error:
         print(f"{AssertionError.__name__}: {error}")
