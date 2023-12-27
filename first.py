@@ -8,6 +8,9 @@ def check_is_nb(str):
         return True
     except ValueError:
         return False
+    except Exception as error:
+        print(f"An unexpected error occurred: {error}")
+        return False
 
 
 def load():
@@ -35,6 +38,9 @@ def load():
     except AssertionError as error:
         print(f"{AssertionError.__name__}: {error}")
         return None
+    except Exception as error:
+        print(f"An unexpected error occurred: {error}")
+        return None
 
 
 def main():
@@ -53,6 +59,8 @@ def main():
 is estimated to be {estimation}")
     except AssertionError as error:
         print(f"{AssertionError.__name__}: {error}")
+    except Exception as error:
+        print(f"An unexpected error occurred: {error}")
     return
 
 
